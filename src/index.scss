@@ -49,14 +49,82 @@ table {
   box-sizing: inherit;
 }
 
+/********************************* Variables **********************************/
+$dark-blue: #323D4E;
+$white: #FFFFFF;
+
+$map-padding: 2rem;
+
 /*********************************** Main ************************************/
+html {
+	font-size: 16px;
+}
+
 body {
-  font-family: -apple-system, sans-serif;
+  font-family: 'Open Sans', -apple-system, sans-serif;
+	color: $white;
+	line-height: 1.5;
 }
 
 .App {
+	position: relative;
+	background-color: $dark-blue;
+	min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+a {
+	color: white;
+	text-decoration: none;
+
+	&.button {
+		font-size: 0.75rem;
+		font-weight: 700;
+		background-color: $white;
+		opacity: 0.75;
+		color: $dark-blue;
+		padding: 1rem 2rem;
+		border-radius: 50px;
+		transition: 0.3s;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+}
+
+header, footer {
+	position: absolute;
+	z-index: 1;
+	display: flex;
+	justify-content: space-between;
+	width: calc(100% - 2 * #{$map-padding});
+}
+
+header {
+	top: $map-padding;
+}
+
+.map-container {
+	width: 100%;
+	height: 100vh;
+	position: relative;
+	z-index: 0;
+
+	.leaflet-control-container {
+		display: none;
+	}
+}
+
+footer {
+	bottom: $map-padding;
+	font-size: 0.75rem;
+	font-weight: bold;
+
+	span {
+		font-weight: 400;
+	}
 }
