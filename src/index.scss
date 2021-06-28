@@ -51,8 +51,9 @@ table {
 
 /********************************* Variables **********************************/
 $dark-blue: #323D4E;
+$icon-blue: #165199;
 $white: #FFFFFF;
-
+$transition: 0.3s;
 $map-padding: 2rem;
 
 /*********************************** Main ************************************/
@@ -88,7 +89,7 @@ a {
 		color: $dark-blue;
 		padding: 1rem 2rem;
 		border-radius: 50px;
-		transition: 0.3s;
+		transition: $transition;
 
 		&:hover {
 			opacity: 1;
@@ -113,9 +114,37 @@ header {
 	height: 100vh;
 	position: relative;
 	z-index: 0;
+	background-color: $dark-blue !important;
 
-	.leaflet-control-container {
+	.leaflet-control-container, 
+	.leaflet-popup-tip-container {
 		display: none;
+	}
+
+	.leaflet-popup {
+		left: 0 !important;
+		bottom: 0 !important;
+		transform: translate(0, 65px) !important;
+		transition: none !important;
+	}
+	
+	.icon {
+		min-width: max-content;
+		height: auto !important;
+		border-radius: 20px;
+		padding: 0.5rem 1.5rem;
+		background-color: $icon-blue;
+		transition: $transition;
+	
+		&:hover {
+			background-color: black;
+		}
+	
+		.icon-span {
+			font-family: 'Open Sans';
+			font-size: 0.875rem;
+			font-weight: 600;
+		}
 	}
 }
 

@@ -1,9 +1,9 @@
+import { useEffect } from 'react';
 import './index.scss';
 import Logo from './assets/amply-logo.svg';
-import LocationPin from "./assets/location.svg";
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import cities from "./cities.json";
 
 export default function App() {
@@ -12,16 +12,22 @@ export default function App() {
   const ZOOM = 8;
   
   // custom Marker Icon
-  let DefaultIcon = L.icon({
-    iconUrl: LocationPin,
-    iconSize: [50,61]
+  L.Marker.prototype.options.icon = L.divIcon({
+    className: 'icon',
+    html: '<span class="icon-span">City, State</span>'
   });
-  L.Marker.prototype.options.icon = DefaultIcon;
+
+  useEffect(() => {
+    setTimeout(() => {
+      let icons = [...document.getElementsByClassName("icon-span")];
+      icons.forEach((icon, idx) => icon.textContent = cities[idx].name);
+    }, 10);
+  }, []);
 
   return (
     <div className="App">
       <header>
-        <img src={Logo} alt="" />
+        <img src={Logo} alt="AMPLY | Gas vs. Electric Comparison Map" />
         <a className="button" href="https://amplypower.com/">
           Visit amplypower.com
         </a>
@@ -32,13 +38,15 @@ export default function App() {
         center={CENTER}
         zoom={ZOOM}
         doubleClickZoom={false}
-        // dragging={false}
-        // scrollWheelZoom={false}
+        dragging={false}
+        scrollWheelZoom={false}
       >
         {
           cities.map((city, idx) => {
             return (
-              <Marker key={idx} position={city.coords}></Marker>
+              <Marker key={idx} position={city.coords}>
+                <Popup>{city.subhead}</Popup>
+              </Marker>
             )
           })
         }
