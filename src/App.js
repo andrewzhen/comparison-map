@@ -22,6 +22,8 @@ export default function App() {
       let icons = [...document.getElementsByClassName("icon-span")];
       icons.forEach((icon, idx) => icon.textContent = cities[idx].name);
     }, 10);
+
+    document.getElementsByClassName("leaflet-popup-close-button")[0].textContent = "";
   }, []);
 
   return (
@@ -45,7 +47,10 @@ export default function App() {
           cities.map((city, idx) => {
             return (
               <Marker key={idx} position={city.coords}>
-                <Popup>{city.subhead}</Popup>
+                <Popup autoPan={false}>
+                  <div>{city.name}</div>
+                  <div>{city.subhead}</div>
+                </Popup>
               </Marker>
             )
           })

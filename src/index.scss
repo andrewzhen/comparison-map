@@ -53,6 +53,7 @@ table {
 $dark-blue: #323D4E;
 $icon-blue: #165199;
 $white: #FFFFFF;
+$black: #000000;
 $transition: 0.3s;
 $map-padding: 2rem;
 
@@ -121,13 +122,72 @@ header {
 		display: none;
 	}
 
-	.leaflet-popup {
-		left: 0 !important;
-		bottom: 0 !important;
-		transform: translate(0, 65px) !important;
-		transition: none !important;
+	.leaflet-map-pane, 
+	.leaflet-popup-pane,
+	.leaflet-popup-content {
+		width: 100% !important;
+		margin: 0;
 	}
-	
+
+	.leaflet-map-pane {
+		height: 100% !important;
+
+		.leaflet-popup {
+			z-index: 1;
+			left: 10% !important;
+			top: 10vh !important;
+			transition: none !important;
+			transform: translate(0, 0) !important;
+			width: 80%;
+			height: 80vh;
+			margin: 0;
+
+			@at-root #{&}-content {
+				padding: $map-padding;
+
+				@at-root #{&}-wrapper {
+					background-color: rgba(0, 0, 0, 0.65);
+					color: $white;
+					height: 100%;
+					border-radius: 20px;
+				}
+			}
+
+			@at-root #{&}-close-button {
+				content: "";
+				padding: 0;
+				border-radius: 50%;
+				border: 3px solid $white;
+				background-color: transparent;
+				color: $white;
+				top: $map-padding;
+				right: $map-padding;
+				width: $map-padding;
+				height: $map-padding;
+
+				&::before, &::after {
+					content: "";
+					display: block;
+					width: 3px;
+					height: 20px;
+					background-color: $white;
+					top: 10px;
+					left: 10px;
+					position: absolute;
+				}
+
+				&::before {
+					transform: rotate(-45deg);
+				}
+
+				&::after {
+					transform: rotate(45deg);
+				}
+			}	
+		}		
+	}
+
+
 	.icon {
 		min-width: max-content;
 		height: auto !important;
