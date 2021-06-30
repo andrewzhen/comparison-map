@@ -1,14 +1,11 @@
 import { useEffect } from 'react';
 import './index.scss';
 import Logo from './assets/amply-logo.svg';
-import LightDuty from './assets/light-duty-fleet.svg';
-import MediumDuty from './assets/medium-duty-fleet.svg';
-import Bus from './assets/bus-fleet.svg';
-import HeavyDuty from './assets/heavy-duty-fleet.svg';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import cities from "./cities.json";
+import Chart from "./Chart";
 
 export default function App() {
   const TOKEN = "pk.eyJ1IjoiYW1wbHkiLCJhIjoiY2tuMm93aGdvMTlibzJvbWx4dmo2a2lhMiJ9.fHpj1_WDJTJSG68nASen1w";
@@ -20,6 +17,17 @@ export default function App() {
     className: 'icon',
     html: '<span class="icon-span">City, State</span>'
   });
+
+  function handleToggle(e) {
+    let idx = e.target.id.slice(5)
+    let city = document.getElementById(`city-${idx}`);
+    city.classList.toggle("expand");
+    let chart = document.getElementById(`chart-${idx}`);
+    let maxHeight = window.getComputedStyle(chart).maxHeight;
+    let newStyle = maxHeight === "0px" ? ["208vw", "8vw"] : ["0", "0"];
+    chart.style.maxHeight = newStyle[0];
+    chart.style.padding = newStyle[1];
+  }
 
   useEffect(() => {
     setTimeout(() => {
@@ -50,124 +58,53 @@ export default function App() {
             return (
               <Marker key={idx} position={city.coords}>
                 <Popup autoPan={false}>
-                  <header>
-                    <h1 className="cityName">{city.name}</h1>
-                    <h2 className="citySubhead">{city.subhead}</h2>
-                  </header>
-
-                  <div className="fleet-chart">
-                    <div className="fleet-chart__row title">
-                      <h3> </h3>
-                      <h3>Fleet Type</h3>
-                      <h3>Managed Electric</h3>
-                      <h3>Unmanaged Electric</h3>
-                      <h3>Gas or Diesel</h3>
-                    </div>
-
-                    <hr />
-                    
-                    <div className="fleet-chart__row">
-                      <img src={LightDuty} alt="Light Duty" />
-                      <p className="fleet-chart__row__type">Light-Duty</p>
-                      {
-                        city.vehicles.light.map((price, idx) => {
-                          return (
-                            <p 
-                              key={idx} 
-                              className={
-                                "fleet-chart__row__cost " + 
-                                (idx === 0 && "managed_electric")
-                              }
-                            >
-                              {price}
-                            </p>
-                          )
-                        })
-                      }
-                    </div>
-                    
-                    <hr />
-
-                    <div className="fleet-chart__row">
-                      <img src={MediumDuty} alt="Medium Duty" />
-                      <p className="fleet-chart__row__type">Medium-Duty</p>
-                      {
-                        city.vehicles.medium.map((price, idx) => {
-                          return (
-                            <p 
-                              key={idx} 
-                              className={
-                                "fleet-chart__row__cost " + 
-                                (idx === 0 && "managed_electric")
-                              }
-                            >
-                              {price}
-                            </p>
-                          )
-                        })
-                      }
-                    </div>
-                    
-                    <hr />
-
-                    <div className="fleet-chart__row">
-                      <img src={Bus} alt="Bus" />
-                      <p className="fleet-chart__row__type">City Bus</p>
-                      {
-                        city.vehicles.bus.map((price, idx) => {
-                          return (
-                            <p 
-                              key={idx} 
-                              className={
-                                "fleet-chart__row__cost " + 
-                                (idx === 0 && "managed_electric")
-                              }
-                            >
-                              {price}
-                            </p>
-                          )
-                        })
-                      }
-                    </div>
-
-                    <hr />
-
-                    <div className="fleet-chart__row">
-                      <img src={HeavyDuty} alt="Heavy Duty" />
-                      <p className="fleet-chart__row__type">Heavy-Duty</p>
-                      {
-                        city.vehicles.heavy.map((price, idx) => {
-                          return (
-                            <p 
-                              key={idx} 
-                              className={
-                                "fleet-chart__row__cost " + 
-                                (idx === 0 && "managed_electric")
-                              }
-                            >
-                              {price}
-                            </p>
-                          )
-                        })
-                      }
-                    </div>
-
-                    <hr />
-                  </div>
-
-                  <footer>
-                    *Utilities with proposed special EV charging rates Gasoline (light- and medium-duty) and diesel (heavy-duty and city buses) prices eﬀective as of 02/23/2020. Source: AAA (https://gas.prices.aaa.com) For all the Metros, managed charging unlocks larger savings. AMPLY handles all aspects of charging operations on behalf of ﬂeet owners, and AMPLY’s managed charging systems are optimized for the lowest electricity costs through navigating demand charges and diﬀerent tariﬀ rates.
-                  </footer>
+                  <Chart 
+                    name={city.name} 
+                    subhead={city.subhead} 
+                    vehicleLight={city.vehicles.light}
+                    vehicleMedium={city.vehicles.medium}
+                    vehicleBus={city.vehicles.bus}
+                    vehicleHeavy={city.vehicles.heavy}
+                  />
                 </Popup>
               </Marker>
             )
           })
         }
         <TileLayer 
-          // url={"https://api.mapbox.com/styles/v1/amply/ckp796vza066p17qw072dnhmr/tiles/256/{z}/{x}/{y}@2x?access_token=" + TOKEN}
           url={"https://api.mapbox.com/styles/v1/suzieqsharkyamply/ckaz5hl1w1cds1ipe3k4oso6k/tiles/256/{z}/{x}/{y}@2x?access_token=" + TOKEN}
         />
       </MapContainer>
+
+      <div className="mobile-container">
+        {
+          cities.map((city, idx) => {
+            return (
+              <div key={idx}  className="city-container">
+                <div 
+                  id={`city-${idx}`}
+                  className="city-container__city"
+                  onClick={handleToggle}
+                >
+                  {city.name}
+                  <div className="city-container__city__toggle"></div>
+                </div>
+
+                <Chart 
+                  id={`chart-${idx}`}
+                  className="city-container__chart"
+                  name={city.name} 
+                  subhead={city.subhead} 
+                  vehicleLight={city.vehicles.light}
+                  vehicleMedium={city.vehicles.medium}
+                  vehicleBus={city.vehicles.bus}
+                  vehicleHeavy={city.vehicles.heavy}
+                />
+              </div>
+            )
+          })
+        }
+      </div>
 
       <footer>
         <div>&#169;2021 AMPLY Power. All Rights Reserved.</div>

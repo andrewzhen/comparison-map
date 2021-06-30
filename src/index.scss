@@ -1,3 +1,5 @@
+@import "./mixins.scss";
+
 /*********************************** Reset ***********************************/
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -50,6 +52,7 @@ table {
 }
 
 /********************************* Variables **********************************/
+$amply-blue: #0082DD;
 $dark-blue: #323D4E;
 $icon-blue: #165199;
 $white: #FFFFFF;
@@ -84,6 +87,17 @@ body {
 		display: flex;
 		justify-content: space-between;
 		width: calc(100% - 2 * #{$map-padding});
+
+		@include sm {
+			position: relative;
+			flex-direction: column;
+			align-items: center;
+			text-align: center;
+
+			img, a.button {
+				margin-bottom: $map-padding;
+			}
+		}
 	}
 
 	header {
@@ -98,6 +112,19 @@ body {
 		span {
 			font-weight: 400;
 		}
+
+		a {
+			transition: $transition;
+
+			&:hover {
+				opacity: 0.5;
+			}
+		}
+
+		@include sm {
+			margin-top: $map-padding;
+			font-size: calc(0.6rem + 0.3vw);
+		}
 	}
 }
 
@@ -111,6 +138,7 @@ a {
 		background-color: $white;
 		opacity: 0.75;
 		color: $dark-blue;
+		width: max-content;
 		padding: 1rem 2rem;
 		border-radius: 50px;
 		transition: $transition;
@@ -177,61 +205,6 @@ a {
 					flex-direction: column;
 					align-items: center;
 					margin-bottom: $map-padding;
-
-					.cityName {
-						font-size: 1.75rem;
-						font-weight: 700;
-						text-transform: uppercase;
-					}
-	
-					.citySubhead {
-						font-size: 1rem;
-					}
-				}
-
-				.fleet-chart {
-					margin-bottom: $map-padding;
-
-					hr {
-						margin: 0;
-						border: 1px solid rgba(255, 255, 255, 0.4);
-					}
-
-					@at-root #{&}__row {
-						display: grid;
-						grid-template-columns: repeat(5, 1fr);
-						align-items: center;
-						text-align: center;
-
-						&:not(:first-child) {
-							margin: 1.4rem 0;
-						}
-
-						&.title {
-							text-transform: uppercase;
-							font-size: 0.875rem;
-							font-weight: 700;
-							color: $grey;
-							margin-bottom: 0.5rem;
-						}
-
-						img {
-							margin: auto;
-						}
-
-						@at-root #{&}__type {
-							font-size: 1.125rem;
-							text-transform: uppercase;
-						}
-
-						@at-root #{&}__cost {
-							font-size: 1.625rem;
-						}
-
-						.managed_electric {
-							font-weight: 700;
-						}
-					}
 				}
 
 				footer {
@@ -310,5 +283,236 @@ a {
 			font-size: 0.875rem;
 			font-weight: 600;
 		}
+	}
+
+	@include sm {
+		display: none;
+	}
+}
+
+.cityName {
+	font-size: 1.75rem;
+	font-weight: 700;
+	text-transform: uppercase;
+
+	@include sm {
+		display: none;
+	}
+}
+
+.citySubhead {
+	font-size: 1rem;
+
+	@include sm {
+		margin-bottom: 12vw;
+	}
+}
+
+.fleet-chart {
+	margin-bottom: $map-padding;
+
+	hr {
+		margin: 0;
+		border: 1px solid rgba(255, 255, 255, 0.4);
+	}
+
+	@at-root #{&}__row {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		align-items: center;
+		text-align: center;
+
+		&:not(:first-child) {
+			margin: 1.4rem 0;
+
+			@include md {
+				margin: 2vw 0;
+			}
+
+			@include sm {
+				margin: 8vw 0;
+			}
+		}
+
+		&.title {
+			margin-bottom: 0.5rem;
+			
+			h3 {
+				text-transform: uppercase;
+				font-size: 0.875rem;
+				font-weight: 700;
+				color: $grey;
+
+				@include md {
+					font-size: 1.4vw;
+				}
+				
+				@include sm {
+					&:first-child {
+						display: none;
+					}
+					
+					font-size: 2.5vw;
+				}
+			}
+		}
+
+		> img {
+			margin: auto;
+			width: 90%;
+
+			@include sm {
+				display: none;
+			}
+		}
+
+		@at-root #{&}__type {
+			font-size: 1.125rem;
+			text-transform: uppercase;
+
+			@at-root #{&}__icon {
+				display: none;
+				width: 25vw;
+				margin: 0 auto 0.5rem;
+
+				@include sm {
+					display: block;
+				}
+			}
+
+			@include md {
+				font-size: 1.6vw;
+			}
+
+			@include sm {
+				font-size: 2.5vw;
+				font-weight: 700;
+			}
+		}
+
+		@at-root #{&}__cost {
+			font-size: 1.625rem;
+
+			@include sm {
+				font-size: 4vw;
+			}
+		}
+
+		.managed_electric {
+			font-weight: 700;
+		}
+
+		@include sm {
+			grid-template-columns: 1.5fr repeat(3, 1fr);
+		}
+	}
+}
+
+.mobile-container {
+	width: calc(100% - 2 * #{$map-padding});
+	display: none;
+
+	.city-container {
+		@at-root #{&}__city {
+			position: relative;
+			font-size: 1.125rem;
+			font-weight: 600;
+			width: 100%;
+			height: 3.25rem;
+			background-color: $amply-blue;
+			border: 2px solid $amply-blue;
+			text-transform: uppercase;
+			text-align: center;
+			border-radius: 5px;
+			padding: 1rem;
+			cursor: pointer;
+			line-height: 1;
+			transition: $transition;
+			max-width: 30rem;
+			margin: auto;
+
+			&.expand {
+				background-color: transparent;
+				color: $amply-blue;
+				border-color: $amply-blue;
+				
+				.city-container__city__toggle {
+					background-color: transparent;
+					border-color: $amply-blue;
+					transform: rotate(-45deg);
+				}
+			}
+
+			@at-root #{&}__toggle {
+				content: "";
+				display: block;
+				position: absolute;
+				padding: 0;
+				border-radius: 50%;
+				border: 2px solid $white;
+				background-color: $white;
+				opacity: 0.75;
+				top: calc((3.25rem - 2rem) / 2);
+				right: calc((3.25rem - 2rem) / 2);
+				width: $map-padding;
+				height: $map-padding;
+				color: transparent;
+				transition: $transition;
+				pointer-events: none;
+
+				&::before, &::after {
+					content: "";
+					display: block;
+					width: 0.15rem;
+					height: 1.15rem;
+					background-color: $amply-blue;
+					border-radius: 5px;;
+					top: calc(0.7rem - 6px);
+					left: calc(0.7rem + 2px);
+					position: absolute;
+				}
+
+				&::before {
+					transform: rotate(0deg);
+				}
+
+				&::after {
+					transform: rotate(90deg);
+				}
+			}	
+		}
+
+		@at-root #{&}__chart {
+			background-color: rgba(0, 0, 0, 0.65);
+			filter: drop-shadow(0px 0px 40px rgba(0, 0, 0, 0.5));
+			border-radius: 10px;
+			position: relative;
+			width: calc(100% + #{$map-padding});
+			left: -$map-padding / 2;
+			padding: 0; // expands to 8vw
+			max-height: 0; // expands to 208vw
+			margin: 0.5rem 0;
+			transition: 0.5s;
+			overflow: hidden;
+
+			header, footer {
+				width: 100%;
+			}
+
+			header {
+				top: 0;
+			}
+
+			footer {
+				text-align: left;
+				bottom: 0;
+				color: $grey;
+			}
+		}
+	}
+
+	@include sm {
+		display: block;
+		margin: 10vw 0;
 	}
 }
