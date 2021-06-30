@@ -53,6 +53,7 @@ table {
 $dark-blue: #323D4E;
 $icon-blue: #165199;
 $white: #FFFFFF;
+$grey: #A9A9A9;
 $black: #000000;
 $transition: 0.3s;
 $map-padding: 2rem;
@@ -76,6 +77,28 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+	header, footer {
+		position: absolute;
+		z-index: 1;
+		display: flex;
+		justify-content: space-between;
+		width: calc(100% - 2 * #{$map-padding});
+	}
+
+	header {
+		top: $map-padding;
+	}
+
+	footer {
+		bottom: $map-padding;
+		font-size: 0.75rem;
+		font-weight: bold;
+	
+		span {
+			font-weight: 400;
+		}
+	}
 }
 
 a {
@@ -98,18 +121,6 @@ a {
 	}
 }
 
-header, footer {
-	position: absolute;
-	z-index: 1;
-	display: flex;
-	justify-content: space-between;
-	width: calc(100% - 2 * #{$map-padding});
-}
-
-header {
-	top: $map-padding;
-}
-
 .map-container {
 	width: 100%;
 	height: 100vh;
@@ -129,24 +140,110 @@ header {
 		margin: 0;
 	}
 
+	.leaflet-map-pane,
+	.leaflet-popup {
+		transform: none !important;
+	}
+
 	.leaflet-map-pane {
 		height: 100% !important;
 
 		.leaflet-popup {
+			font-family: "Open Sans";
+			position: relative;
 			z-index: 1;
-			left: 10% !important;
+			left: 0 !important;
 			top: 10vh !important;
-			transition: none !important;
-			transform: translate(0, 0) !important;
+			transform: none !important;
 			width: 80%;
+			max-width: 1200px;
 			height: 80vh;
-			margin: 0;
+			margin: auto;
+			filter: drop-shadow(0px 0px 40px rgba(0, 0, 0, 0.5));
+			transition: $transition;
 
-			@at-root #{&}-content {
-				padding: $map-padding;
+			.leaflet-popup-content-wrapper {
+				overflow-y: scroll;
+			}
+
+			.leaflet-popup-content {
+				padding: $map-padding $map-padding * 2;
+
+				header {
+					position: relative;
+					top: 0;
+					z-index: 0;
+					width: 100%;
+					flex-direction: column;
+					align-items: center;
+					margin-bottom: $map-padding;
+
+					.cityName {
+						font-size: 1.75rem;
+						font-weight: 700;
+						text-transform: uppercase;
+					}
+	
+					.citySubhead {
+						font-size: 1rem;
+					}
+				}
+
+				.fleet-chart {
+					margin-bottom: $map-padding;
+
+					hr {
+						margin: 0;
+						border: 1px solid rgba(255, 255, 255, 0.4);
+					}
+
+					@at-root #{&}__row {
+						display: grid;
+						grid-template-columns: repeat(5, 1fr);
+						align-items: center;
+						text-align: center;
+
+						&:not(:first-child) {
+							margin: 1.4rem 0;
+						}
+
+						&.title {
+							text-transform: uppercase;
+							font-size: 0.875rem;
+							font-weight: 700;
+							color: $grey;
+							margin-bottom: 0.5rem;
+						}
+
+						img {
+							margin: auto;
+						}
+
+						@at-root #{&}__type {
+							font-size: 1.125rem;
+							text-transform: uppercase;
+						}
+
+						@at-root #{&}__cost {
+							font-size: 1.625rem;
+						}
+
+						.managed_electric {
+							font-weight: 700;
+						}
+					}
+				}
+
+				footer {
+					position: relative;
+					bottom: 0;
+					color: $grey;
+					font-size: 0.6875rem;
+					width: 100%;
+				}
 
 				@at-root #{&}-wrapper {
-					background-color: rgba(0, 0, 0, 0.65);
+					background-color: rgba(0, 0, 0, 0.75);
 					color: $white;
 					height: 100%;
 					border-radius: 20px;
@@ -155,24 +252,33 @@ header {
 
 			@at-root #{&}-close-button {
 				content: "";
+				display: block;
+				position: absolute;
 				padding: 0;
 				border-radius: 50%;
-				border: 3px solid $white;
+				border: 2px solid $white;
 				background-color: transparent;
 				color: $white;
 				top: $map-padding;
-				right: $map-padding;
+				right: $map-padding * 2;
 				width: $map-padding;
 				height: $map-padding;
+				color: transparent;
+				transition: $transition;
+
+				&:hover {
+					color: transparent;
+					opacity: 0.65;
+				}
 
 				&::before, &::after {
 					content: "";
 					display: block;
-					width: 3px;
-					height: 20px;
+					width: 0.15rem;
+					height: 1.15rem;
 					background-color: $white;
-					top: 10px;
-					left: 10px;
+					top: calc(0.575rem - 4px);
+					left: calc(0.575rem + 4px);
 					position: absolute;
 				}
 
@@ -187,12 +293,11 @@ header {
 		}		
 	}
 
-
 	.icon {
 		min-width: max-content;
 		height: auto !important;
 		border-radius: 20px;
-		padding: 0.5rem 1.5rem;
+		padding: 0.2rem 1rem;
 		background-color: $icon-blue;
 		transition: $transition;
 	
@@ -205,15 +310,5 @@ header {
 			font-size: 0.875rem;
 			font-weight: 600;
 		}
-	}
-}
-
-footer {
-	bottom: $map-padding;
-	font-size: 0.75rem;
-	font-weight: bold;
-
-	span {
-		font-weight: 400;
 	}
 }
