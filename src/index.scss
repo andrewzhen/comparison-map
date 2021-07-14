@@ -1,4 +1,5 @@
 @import "./mixins.scss";
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap');
 
 /*********************************** Reset ***********************************/
 html, body, div, span, applet, object, iframe,
@@ -52,9 +53,10 @@ table {
 }
 
 /********************************* Variables **********************************/
-$amply-blue: #0082DD;
+$blue: #0082DD;
 $dark-blue: #323D4E;
 $icon-blue: #165199;
+$yellow: #FFC23A;
 $white: #FFFFFF;
 $grey: #A9A9A9;
 $black: #000000;
@@ -88,7 +90,7 @@ body {
 		justify-content: space-between;
 		width: calc(100% - 2 * #{$map-padding});
 
-		@include sm {
+		@include lg {
 			position: relative;
 			flex-direction: column;
 			align-items: center;
@@ -108,6 +110,14 @@ body {
 		bottom: $map-padding;
 		font-size: 0.75rem;
 		font-weight: bold;
+
+		@include lg {
+			margin-top: $map-padding;
+		}
+
+		@include sm {
+			font-size: calc(0.6rem + 0.3vw);
+		}
 	
 		span {
 			font-weight: 400;
@@ -120,11 +130,6 @@ body {
 				opacity: 0.5;
 			}
 		}
-
-		@include sm {
-			margin-top: $map-padding;
-			font-size: calc(0.6rem + 0.3vw);
-		}
 	}
 }
 
@@ -133,7 +138,7 @@ a {
 	text-decoration: none;
 
 	&.button {
-		font-size: 0.75rem;
+		font-size: 0.8125rem;
 		font-weight: 700;
 		background-color: $white;
 		opacity: 0.75;
@@ -146,6 +151,13 @@ a {
 		&:hover {
 			opacity: 1;
 		}
+
+		@include lg {
+			background-color: transparent;
+			opacity: 1;
+			color: $white;
+			padding: 0;
+		}
 	}
 }
 
@@ -155,6 +167,10 @@ a {
 	position: relative;
 	z-index: 0;
 	background-color: $dark-blue !important;
+
+	@include lg {
+		display: none;
+	}
 
 	.leaflet-control-container, 
 	.leaflet-popup-tip-container {
@@ -176,94 +192,104 @@ a {
 	.leaflet-map-pane {
 		height: 100% !important;
 
-		.leaflet-popup {
-			font-family: "Open Sans";
-			position: relative;
-			z-index: 1;
-			left: 0 !important;
-			top: 10vh !important;
-			transform: none !important;
-			width: 80%;
-			max-width: 1200px;
-			height: 80vh;
-			margin: auto;
-			filter: drop-shadow(0px 0px 40px rgba(0, 0, 0, 0.5));
-			transition: $transition;
+		.leaflet-popup-pane {
+			top: 50%;
 
-			.leaflet-popup-content-wrapper {
-				overflow-y: scroll;
-			}
-
-			.leaflet-popup-content {
-				padding: $map-padding $map-padding * 2;
-
-				header {
-					position: relative;
-					top: 0;
-					z-index: 0;
-					width: 100%;
-					flex-direction: column;
-					align-items: center;
-					margin-bottom: $map-padding;
-				}
-
-				footer {
-					position: relative;
-					bottom: 0;
-					color: $grey;
-					font-size: 0.6875rem;
-					width: 100%;
-				}
-
-				@at-root #{&}-wrapper {
-					background-color: rgba(0, 0, 0, 0.75);
-					color: $white;
-					height: 100%;
-					border-radius: 20px;
-				}
-			}
-
-			@at-root #{&}-close-button {
-				content: "";
-				display: block;
-				position: absolute;
-				padding: 0;
-				border-radius: 50%;
-				border: 2px solid $white;
-				background-color: transparent;
-				color: $white;
-				top: $map-padding;
-				right: $map-padding * 2;
-				width: $map-padding;
-				height: $map-padding;
-				color: transparent;
+			.leaflet-popup {
+				font-family: 'Open Sans', -apple-system, sans-serif;
+				position: relative;
+				z-index: 1;
+				left: 0 !important;
+				top: 50% !important;
+				transform: translateY(-50%) !important;
+				width: 80%;
+				max-width: 1200px;
+				margin: auto;
+				filter: drop-shadow(0px 0px 40px rgba(0, 0, 0, 0.5));
 				transition: $transition;
 
-				&:hover {
-					color: transparent;
-					opacity: 0.65;
+				.leaflet-popup-content-wrapper {
+					overflow-y: scroll;
+					scrollbar-width: none; /* hide Firefox scrollbar */
+					-ms-overflow-style: none; /* hide IE and Edge scrollbar */
+					height: max-content;
+
+					&::-webkit-scrollbar {
+						display: none; /* hide Chrome, Safari, Opera scrollbar */
+					}
 				}
 
-				&::before, &::after {
+				.leaflet-popup-content {
+					padding: $map-padding $map-padding * 2;
+
+					header {
+						position: relative;
+						top: 0;
+						z-index: 0;
+						width: 100%;
+						flex-direction: column;
+						align-items: center;
+						margin-bottom: $map-padding;
+					}
+
+					footer {
+						position: relative;
+						bottom: 0;
+						color: $grey;
+						font-size: 0.75rem;
+						width: 100%;
+					}
+
+					@at-root #{&}-wrapper {
+						background-color: rgba(0, 0, 0, 0.85);
+						color: $white;
+						height: 100%;
+						border-radius: 20px;
+					}
+				}
+
+				@at-root #{&}-close-button {
 					content: "";
 					display: block;
-					width: 0.15rem;
-					height: 1.15rem;
-					background-color: $white;
-					top: calc(0.575rem - 4px);
-					left: calc(0.575rem + 4px);
 					position: absolute;
-				}
+					padding: 0;
+					border-radius: 50%;
+					border: 2px solid $blue;
+					background-color: transparent;
+					color: $white;
+					top: $map-padding;
+					right: $map-padding * 2;
+					width: $map-padding;
+					height: $map-padding;
+					color: transparent;
+					transition: $transition;
 
-				&::before {
-					transform: rotate(-45deg);
-				}
+					&:hover {
+						opacity: 0.65;
+					}
 
-				&::after {
-					transform: rotate(45deg);
-				}
-			}	
-		}		
+					&::before, &::after {
+						content: "";
+						display: block;
+						width: 2px;
+						height: 1rem;
+						background-color: $blue;
+						top: calc(0.5rem - 2px);
+						left: calc(0.5rem + 5px);
+						position: absolute;
+						border-radius: 5px;
+					}
+
+					&::before {
+						transform: rotate(-45deg);
+					}
+
+					&::after {
+						transform: rotate(45deg);
+					}
+				}	
+			}		
+		}
 	}
 
 	.icon {
@@ -275,18 +301,14 @@ a {
 		transition: $transition;
 	
 		&:hover {
-			background-color: black;
+			background-color: $yellow;
 		}
 	
 		.icon-span {
-			font-family: 'Open Sans';
+			font-family: 'Open Sans', -apple-system, sans-serif;
 			font-size: 0.875rem;
-			font-weight: 600;
+			font-weight: 700;
 		}
-	}
-
-	@include sm {
-		display: none;
 	}
 }
 
@@ -295,7 +317,7 @@ a {
 	font-weight: 700;
 	text-transform: uppercase;
 
-	@include sm {
+	@include lg {
 		display: none;
 	}
 }
@@ -303,8 +325,8 @@ a {
 .citySubhead {
 	font-size: 1rem;
 
-	@include sm {
-		margin-bottom: 12vw;
+	@include lg {
+		margin-bottom: 8vw;
 	}
 }
 
@@ -329,13 +351,13 @@ a {
 				margin: 2vw 0;
 			}
 
-			@include sm {
+			@include lg {
 				margin: 8vw 0;
 			}
 		}
 
 		&.title {
-			margin-bottom: 0.5rem;
+			margin-bottom: $map-padding;
 			
 			h3 {
 				text-transform: uppercase;
@@ -343,25 +365,31 @@ a {
 				font-weight: 700;
 				color: $grey;
 
+				@include lg {
+					&:first-child {
+						display: none;
+					}
+				}
+
 				@include md {
 					font-size: 1.4vw;
 				}
 				
 				@include sm {
-					&:first-child {
-						display: none;
-					}
-					
-					font-size: 2.5vw;
+					font-size: 2vw;
 				}
 			}
+		}
+
+		@include lg {
+			grid-template-columns: 1.5fr repeat(3, 1fr);
 		}
 
 		> img {
 			margin: auto;
 			width: 90%;
 
-			@include sm {
+			@include lg {
 				display: none;
 			}
 		}
@@ -370,16 +398,6 @@ a {
 			font-size: 1.125rem;
 			text-transform: uppercase;
 
-			@at-root #{&}__icon {
-				display: none;
-				width: 25vw;
-				margin: 0 auto 0.5rem;
-
-				@include sm {
-					display: block;
-				}
-			}
-
 			@include md {
 				font-size: 1.6vw;
 			}
@@ -387,6 +405,20 @@ a {
 			@include sm {
 				font-size: 2.5vw;
 				font-weight: 700;
+			}
+
+			@at-root #{&}__icon {
+				display: none;
+				margin: 0 auto 0.5rem;
+
+				@include lg {
+					display: block;
+					width: 12rem;
+				}
+
+				@include sm {
+					width: 25vw;
+				}
 			}
 		}
 
@@ -399,11 +431,7 @@ a {
 		}
 
 		.managed_electric {
-			font-weight: 700;
-		}
-
-		@include sm {
-			grid-template-columns: 1.5fr repeat(3, 1fr);
+			font-weight: 800;
 		}
 	}
 }
@@ -412,34 +440,47 @@ a {
 	width: calc(100% - 2 * #{$map-padding});
 	display: none;
 
+	@include lg {
+		display: block;
+		margin: $map-padding 0;
+	}
+
 	.city-container {
 		@at-root #{&}__city {
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			position: relative;
 			font-size: 1.125rem;
 			font-weight: 600;
 			width: 100%;
 			height: 3.25rem;
-			background-color: $amply-blue;
-			border: 2px solid $amply-blue;
+			background-color: $blue;
+			border: 2px solid $blue;
 			text-transform: uppercase;
-			text-align: center;
 			border-radius: 5px;
 			padding: 1rem;
 			cursor: pointer;
-			line-height: 1;
 			transition: $transition;
 			max-width: 30rem;
 			margin: auto;
 
 			&.expand {
 				background-color: transparent;
-				color: $amply-blue;
-				border-color: $amply-blue;
+				color: $blue;
+				border-color: $blue;
 				
 				.city-container__city__toggle {
 					background-color: transparent;
-					border-color: $amply-blue;
-					transform: rotate(-45deg);
+					border-color: $blue;
+
+					&::before {
+						transform: rotate(-45deg);
+					}
+
+					&::after {
+						transform: rotate(45deg);
+					}
 				}
 			}
 
@@ -451,8 +492,8 @@ a {
 				border-radius: 50%;
 				border: 2px solid $white;
 				background-color: $white;
-				opacity: 0.75;
-				top: calc((3.25rem - 2rem) / 2);
+				transform: translateY(-50%);
+				top: 50%;
 				right: calc((3.25rem - 2rem) / 2);
 				width: $map-padding;
 				height: $map-padding;
@@ -463,13 +504,14 @@ a {
 				&::before, &::after {
 					content: "";
 					display: block;
-					width: 0.15rem;
-					height: 1.15rem;
-					background-color: $amply-blue;
+					width: 2px;
+					height: 1rem;
+					background-color: $blue;
 					border-radius: 5px;;
-					top: calc(0.7rem - 6px);
-					left: calc(0.7rem + 2px);
+					top: calc(0.5rem - 2px);
+					left: calc(0.5rem + 5px);
 					position: absolute;
+					transition: $transition;
 				}
 
 				&::before {
@@ -487,13 +529,17 @@ a {
 			filter: drop-shadow(0px 0px 40px rgba(0, 0, 0, 0.5));
 			border-radius: 10px;
 			position: relative;
-			width: calc(100% + #{$map-padding});
-			left: -$map-padding / 2;
+			width: 100%;
 			padding: 0; // expands to 8vw
 			max-height: 0; // expands to 208vw
-			margin: 0.5rem 0;
+			max-width: 800px;
+			margin: 1rem auto;
 			transition: 0.5s;
 			overflow: hidden;
+
+			@include sm {
+				margin: 0.5rem auto;
+			}
 
 			header, footer {
 				width: 100%;
@@ -509,10 +555,5 @@ a {
 				color: $grey;
 			}
 		}
-	}
-
-	@include sm {
-		display: block;
-		margin: 10vw 0;
 	}
 }

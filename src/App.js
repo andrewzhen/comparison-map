@@ -18,6 +18,7 @@ export default function App() {
     html: '<span class="icon-span">City, State</span>'
   });
 
+  // style toggled drawers selected by DOM index
   function handleToggle(e) {
     let idx = e.target.id.slice(5)
     let city = document.getElementById(`city-${idx}`);
@@ -30,10 +31,11 @@ export default function App() {
   }
 
   useEffect(() => {
+    // wait before populating city, state names
     setTimeout(() => {
       let icons = [...document.getElementsByClassName("icon-span")];
       icons.forEach((icon, idx) => icon.textContent = cities[idx].name);
-    }, 10);
+    }, 100);
   }, []);
 
   return (
@@ -52,6 +54,7 @@ export default function App() {
         doubleClickZoom={false}
         dragging={false}
         scrollWheelZoom={false}
+        tap={false} // fixes unrecognized click event on Mac Safari for Leaflet v1.7.1
       >
         {
           cities.map((city, idx) => {
