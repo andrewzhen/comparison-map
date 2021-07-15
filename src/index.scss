@@ -56,6 +56,7 @@ table {
 $blue: #0082DD;
 $dark-blue: #323D4E;
 $icon-blue: #165199;
+$expand-blue: #31A1EF;
 $yellow: #FFC23A;
 $white: #FFFFFF;
 $grey: #A9A9A9;
@@ -172,6 +173,11 @@ a {
 		display: none;
 	}
 
+	.heartPopup__diagram {
+		width: 100%;
+		padding: 4rem 0;
+	}
+
 	.leaflet-control-container, 
 	.leaflet-popup-tip-container {
 		display: none;
@@ -220,7 +226,7 @@ a {
 				}
 
 				.leaflet-popup-content {
-					padding: $map-padding $map-padding * 2;
+					padding: $map-padding;
 
 					header {
 						position: relative;
@@ -238,6 +244,13 @@ a {
 						color: $grey;
 						font-size: 0.75rem;
 						width: 100%;
+						display: block;
+
+						a {
+							font: inherit;
+							color: inherit;
+							text-decoration: underline;
+						}
 					}
 
 					@at-root #{&}-wrapper {
@@ -255,17 +268,16 @@ a {
 					padding: 0;
 					border-radius: 50%;
 					border: 2px solid $blue;
-					background-color: transparent;
-					color: $white;
+					background-color: $blue;
+					color: transparent;
 					top: $map-padding;
-					right: $map-padding * 2;
+					right: $map-padding;
 					width: $map-padding;
 					height: $map-padding;
-					color: transparent;
 					transition: $transition;
 
 					&:hover {
-						opacity: 0.65;
+						opacity: 0.75;
 					}
 
 					&::before, &::after {
@@ -273,7 +285,7 @@ a {
 						display: block;
 						width: 2px;
 						height: 1rem;
-						background-color: $blue;
+						background-color: $white;
 						top: calc(0.5rem - 2px);
 						left: calc(0.5rem + 5px);
 						position: absolute;
@@ -340,7 +352,7 @@ a {
 
 	@at-root #{&}__row {
 		display: grid;
-		grid-template-columns: repeat(5, 1fr);
+		grid-template-columns: repeat(7, 1fr);
 		align-items: center;
 		text-align: center;
 
@@ -366,7 +378,7 @@ a {
 				color: $grey;
 
 				@include lg {
-					&:first-child {
+					&.desktop {
 						display: none;
 					}
 				}
@@ -449,7 +461,7 @@ a {
 		@at-root #{&}__city {
 			display: flex;
 			align-items: center;
-			justify-content: center;
+			justify-content: flex-start;
 			position: relative;
 			font-size: 1.125rem;
 			font-weight: 600;
@@ -466,13 +478,17 @@ a {
 			margin: auto;
 
 			&.expand {
-				background-color: transparent;
-				color: $blue;
-				border-color: $blue;
+				background-color: $black;
+				color: $expand-blue;
+				border-color: $expand-blue;
 				
 				.city-container__city__toggle {
-					background-color: transparent;
-					border-color: $blue;
+					background-color: $blue;
+					border-color: $expand-blue;
+
+					&::before, &::after {
+						background-color: $white;
+					}
 
 					&::before {
 						transform: rotate(-45deg);
@@ -550,9 +566,16 @@ a {
 			}
 
 			footer {
+				display: block;
 				text-align: left;
 				bottom: 0;
 				color: $grey;
+
+				a {
+					font: inherit;
+					color: inherit;
+					text-decoration: underline;
+				}
 			}
 		}
 	}

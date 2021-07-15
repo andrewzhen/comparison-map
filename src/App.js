@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import './index.scss';
 import Logo from './assets/amply-logo.svg';
+import Heart from './assets/heart.svg';
+import heartPopup from './assets/heartPopup.svg';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
@@ -13,9 +15,15 @@ export default function App() {
   const ZOOM = 5;
   
   // custom Marker Icon
-  L.Marker.prototype.options.icon = L.divIcon({
+  // L.Marker.prototype.options.icon
+  const cityIcon = L.divIcon({
     className: 'icon',
     html: '<span class="icon-span">City, State</span>'
+  });
+
+  const heartIcon = L.icon({
+    iconUrl: Heart,
+    iconSize: [40,35]
   });
 
   // style toggled drawers selected by DOM index
@@ -56,10 +64,15 @@ export default function App() {
         scrollWheelZoom={false}
         tap={false} // fixes unrecognized click event on Mac Safari for Leaflet v1.7.1
       >
+        <Marker position={[33.5,-118.3]} icon={heartIcon}>
+          <Popup autoPan={false}>
+            <img className="heartPopup__diagram" src={heartPopup} />
+          </Popup>
+        </Marker>
         {
           cities.map((city, idx) => {
             return (
-              <Marker key={idx} position={city.coords}>
+              <Marker key={idx} position={city.coords} icon={cityIcon}>
                 <Popup autoPan={false}>
                   <Chart 
                     name={city.name} 
@@ -83,7 +96,7 @@ export default function App() {
         {
           cities.map((city, idx) => {
             return (
-              <div key={idx}  className="city-container">
+              <div key={idx} className="city-container">
                 <div 
                   id={`city-${idx}`}
                   className="city-container__city"

@@ -13,11 +13,13 @@ export default function Chart(props) {
 
       <div className="fleet-chart">
         <div className="fleet-chart__row title">
-          <h3> </h3>
+          <h3 className="desktop"> </h3>
           <h3>Fleet Type</h3>
-          <h3>Managed Electric</h3>
-          <h3>Unmanaged Electric</h3>
-          <h3>Gas or Diesel</h3>
+          <h3>Managed Charging</h3>
+          <h3>Unmanaged Charging</h3>
+          <h3>Internal Combustion Engine (ICE)</h3>
+          <h3 className="desktop">Managed Charging Diff over ICE</h3>
+          <h3 className="desktop">Unmanaged Charging Diff over ICE</h3>
         </div>
 
         <hr />
@@ -140,7 +142,7 @@ export default function Chart(props) {
       </div>
 
       <footer>
-        *Utilities with proposed special EV charging rates Gasoline (light- and medium-duty) and diesel (heavy-duty and city buses) prices eﬀective as of 02/23/2020. Source: AAA (https://gas.prices.aaa.com) For all the Metros, managed charging unlocks larger savings. AMPLY handles all aspects of charging operations on behalf of ﬂeet owners, and AMPLY’s managed charging systems are optimized for the lowest electricity costs through navigating demand charges and diﬀerent tariﬀ rates.
+        *Utilities with proposed special EV charging rates Gasoline (light- and medium-duty) and diesel (heavy-duty and city buses) prices eﬀective as of 02/23/2020. Source: AAA (<a href="https://gas.prices.aaa.com">https://gas.prices.aaa.com</a>) For all the Metros, managed charging unlocks larger savings. AMPLY handles all aspects of charging operations on behalf of ﬂeet owners, and AMPLY’s managed charging systems are optimized for the lowest electricity costs through navigating demand charges and diﬀerent tariﬀ rates.
       </footer>
     </div>
   );
