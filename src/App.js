@@ -64,7 +64,7 @@ export default function App() {
         scrollWheelZoom={false}
         tap={false} // fixes unrecognized click event on Mac Safari for Leaflet v1.7.1
       >
-        <Marker position={[33.5,-118.3]} icon={heartIcon}>
+        <Marker position={[33.8,-118.5]} icon={heartIcon}>
           <Popup autoPan={false}>
             <img className="heartPopup__diagram" src={heartPopup} />
           </Popup>

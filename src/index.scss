@@ -437,6 +437,12 @@ a {
 		@at-root #{&}__cost {
 			font-size: 1.625rem;
 
+			@include lg {
+				&.desktop {
+					display: none;
+				}
+			}
+
 			@include sm {
 				font-size: 4vw;
 			}

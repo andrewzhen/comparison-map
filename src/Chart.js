@@ -40,8 +40,9 @@ export default function Chart(props) {
                 <p 
                   key={idx} 
                   className={
-                    "fleet-chart__row__cost " + 
-                    (idx === 0 && "managed_electric")
+                    "fleet-chart__row__cost" + " " +
+                    (idx === 0 ? "managed_electric" : null) + " " + 
+                    (idx > 2 ? "desktop" : null)
                   }
                 >
                   {price}
@@ -69,8 +70,9 @@ export default function Chart(props) {
                 <p 
                   key={idx} 
                   className={
-                    "fleet-chart__row__cost " + 
-                    (idx === 0 && "managed_electric")
+                    "fleet-chart__row__cost" + " " +
+                    (idx === 0 ? "managed_electric" : null) + " " +
+                    (idx > 2 ? "desktop" : null)
                   }
                 >
                   {price}
@@ -98,8 +100,9 @@ export default function Chart(props) {
                 <p 
                   key={idx} 
                   className={
-                    "fleet-chart__row__cost " + 
-                    (idx === 0 && "managed_electric")
+                    "fleet-chart__row__cost" + " " +
+                    (idx === 0 ? "managed_electric" : null) + " " + 
+                    (idx > 2 ? "desktop" : null)
                   }
                 >
                   {price}
@@ -127,8 +130,9 @@ export default function Chart(props) {
                 <p 
                   key={idx} 
                   className={
-                    "fleet-chart__row__cost " + 
-                    (idx === 0 && "managed_electric")
+                    "fleet-chart__row__cost" + " " +
+                    (idx === 0 ? "managed_electric" : null) + " " + 
+                    (idx > 2 ? "desktop" : null)
                   }
                 >
                   {price}
