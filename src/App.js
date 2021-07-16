@@ -6,18 +6,17 @@ import heartPopup from './assets/heartPopup.svg';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-// import cities from "./component/data/cities.json";
 import Chart from "./component/Chart";
 
 export default function App() {
   const TOKEN = "pk.eyJ1IjoiYW1wbHkiLCJhIjoiY2tuMm93aGdvMTlibzJvbWx4dmo2a2lhMiJ9.fHpj1_WDJTJSG68nASen1w";
   const CENTER = { lat: 37.0902, lng: -95.7129 };
   const ZOOM = 5;
-  const citiesUrl = "https://api.github.com/repos/andrewzhen/comparison-map/contents/cities.json?ref=main";
+  // const citiesUrl = "https://api.github.com/repos/andrewzhen/comparison-map/contents/cities.json?ref=main";
+  const citiesUrl = "https://raw.githubusercontent.com/andrewzhen/comparison-map/main/cities.json";
   const [cities, setCities] = useState([]);
   
   // custom Marker Icon
-  // L.Marker.prototype.options.icon
   const cityIcon = L.divIcon({
     className: 'icon',
     html: '<span class="icon-span">City, State</span>'
@@ -46,17 +45,14 @@ export default function App() {
       .then(
         cities => {
           setCities(cities);
-          let icons = [...document.getElementsByClassName("icon-span")];
-          icons.forEach((icon, idx) => icon.textContent = cities[idx].name);
+          
+          // wait before populating city, state names
+          setTimeout(() => {
+            let icons = [...document.getElementsByClassName("icon-span")];
+            icons.forEach((icon, idx) => icon.textContent = cities[idx].name);
+          }, 100)
         }
       )
-      // .then(
-      //   // wait before populating city, state names
-      //   setTimeout(() => {
-      //     let icons = [...document.getElementsByClassName("icon-span")];
-      //     icons.forEach((icon, idx) => icon.textContent = cities[idx].name);
-      //   }, 100)
-      // )
   }, []);
 
   return (
