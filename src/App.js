@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './index.scss';
 import Logo from './assets/amply-logo.svg';
 import Heart from './assets/heart.svg';
@@ -6,13 +6,15 @@ import heartPopup from './assets/heartPopup.svg';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import cities from "./cities.json";
-import Chart from "./Chart";
+// import cities from "./component/data/cities.json";
+import Chart from "./component/Chart";
 
 export default function App() {
   const TOKEN = "pk.eyJ1IjoiYW1wbHkiLCJhIjoiY2tuMm93aGdvMTlibzJvbWx4dmo2a2lhMiJ9.fHpj1_WDJTJSG68nASen1w";
   const CENTER = { lat: 37.0902, lng: -95.7129 };
   const ZOOM = 5;
+  const citiesUrl = "https://api.github.com/repos/andrewzhen/comparison-map/contents/cities.json?ref=main";
+  const [cities, setCities] = useState([]);
   
   // custom Marker Icon
   // L.Marker.prototype.options.icon
@@ -39,11 +41,22 @@ export default function App() {
   }
 
   useEffect(() => {
-    // wait before populating city, state names
-    setTimeout(() => {
-      let icons = [...document.getElementsByClassName("icon-span")];
-      icons.forEach((icon, idx) => icon.textContent = cities[idx].name);
-    }, 100);
+    fetch(citiesUrl)
+      .then(res => res.json())
+      .then(
+        cities => {
+          setCities(cities);
+          let icons = [...document.getElementsByClassName("icon-span")];
+          icons.forEach((icon, idx) => icon.textContent = cities[idx].name);
+        }
+      )
+      // .then(
+      //   // wait before populating city, state names
+      //   setTimeout(() => {
+      //     let icons = [...document.getElementsByClassName("icon-span")];
+      //     icons.forEach((icon, idx) => icon.textContent = cities[idx].name);
+      //   }, 100)
+      // )
   }, []);
 
   return (
@@ -66,7 +79,11 @@ export default function App() {
       >
         <Marker position={[33.8,-118.5]} icon={heartIcon}>
           <Popup autoPan={false}>
-            <img className="heartPopup__diagram" src={heartPopup} />
+            <img 
+              className="heartPopup__diagram" 
+              src={heartPopup} 
+              alt="Impacts of a National Transition to EVs by 2050"
+            />
           </Popup>
         </Marker>
         {

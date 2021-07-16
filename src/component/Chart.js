@@ -1,7 +1,7 @@
-import LightDuty from './assets/light-duty-fleet.svg';
-import MediumDuty from './assets/medium-duty-fleet.svg';
-import Bus from './assets/bus-fleet.svg';
-import HeavyDuty from './assets/heavy-duty-fleet.svg';
+import LightDuty from './../assets/light-duty-fleet.svg';
+import MediumDuty from './../assets/medium-duty-fleet.svg';
+import Bus from './../assets/bus-fleet.svg';
+import HeavyDuty from './../assets/heavy-duty-fleet.svg';
 
 export default function Chart(props) {
   return (
@@ -40,9 +40,9 @@ export default function Chart(props) {
                 <p 
                   key={idx} 
                   className={
-                    "fleet-chart__row__cost" + " " +
-                    (idx === 0 ? "managed_electric" : null) + " " + 
-                    (idx > 2 ? "desktop" : null)
+                    `fleet-chart__row__cost 
+                    ${idx === 0 ? 'managed_electric' : null} 
+                    ${idx > 2 ? 'desktop' : null}`
                   }
                 >
                   {price}
@@ -70,9 +70,9 @@ export default function Chart(props) {
                 <p 
                   key={idx} 
                   className={
-                    "fleet-chart__row__cost" + " " +
-                    (idx === 0 ? "managed_electric" : null) + " " +
-                    (idx > 2 ? "desktop" : null)
+                    `fleet-chart__row__cost 
+                    ${idx === 0 ? 'managed_electric' : null} 
+                    ${idx > 2 ? 'desktop' : null}`
                   }
                 >
                   {price}
@@ -100,9 +100,9 @@ export default function Chart(props) {
                 <p 
                   key={idx} 
                   className={
-                    "fleet-chart__row__cost" + " " +
-                    (idx === 0 ? "managed_electric" : null) + " " + 
-                    (idx > 2 ? "desktop" : null)
+                    `fleet-chart__row__cost 
+                    ${idx === 0 ? 'managed_electric' : null} 
+                    ${idx > 2 ? 'desktop' : null}`
                   }
                 >
                   {price}
@@ -130,9 +130,9 @@ export default function Chart(props) {
                 <p 
                   key={idx} 
                   className={
-                    "fleet-chart__row__cost" + " " +
-                    (idx === 0 ? "managed_electric" : null) + " " + 
-                    (idx > 2 ? "desktop" : null)
+                    `fleet-chart__row__cost 
+                    ${idx === 0 ? 'managed_electric' : null} 
+                    ${idx > 2 ? 'desktop' : null}`
                   }
                 >
                   {price}
