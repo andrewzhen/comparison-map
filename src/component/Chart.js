@@ -14,12 +14,13 @@ export default function Chart(props) {
       <div className="fleet-chart">
         <div className="fleet-chart__row title">
           <h3 className="desktop"> </h3>
-          <h3>Fleet Type</h3>
+          <h3>Electric Fleet Type</h3>
           <h3>Managed Charging</h3>
           <h3>Unmanaged Charging</h3>
-          <h3>Internal Combustion Engine (ICE)</h3>
-          <h3 className="desktop">Managed Charging Diff over ICE</h3>
-          <h3 className="desktop">Unmanaged Charging Diff over ICE</h3>
+          <h3>Gas or Diesel</h3>
+          <h3 className="desktop">
+            Managed Charging % Saved Over Gas or Diesel
+          </h3>
         </div>
 
         <hr />
@@ -41,8 +42,8 @@ export default function Chart(props) {
                   key={idx} 
                   className={
                     `fleet-chart__row__cost 
-                    ${idx === 0 ? 'managed_electric' : null} 
-                    ${idx > 2 ? 'desktop' : null}`
+                    ${idx === 0 || idx === 3 ? 'managed_electric' : null} 
+                    ${idx === 3 ? 'percent_saved desktop' : null}`
                   }
                 >
                   {price}
@@ -71,8 +72,8 @@ export default function Chart(props) {
                   key={idx} 
                   className={
                     `fleet-chart__row__cost 
-                    ${idx === 0 ? 'managed_electric' : null} 
-                    ${idx > 2 ? 'desktop' : null}`
+                    ${idx === 0 || idx === 3 ? 'managed_electric' : null} 
+                    ${idx === 3 ? 'percent_saved desktop' : null}`
                   }
                 >
                   {price}
@@ -101,8 +102,8 @@ export default function Chart(props) {
                   key={idx} 
                   className={
                     `fleet-chart__row__cost 
-                    ${idx === 0 ? 'managed_electric' : null} 
-                    ${idx > 2 ? 'desktop' : null}`
+                    ${idx === 0 || idx === 3 ? 'managed_electric' : null} 
+                    ${idx === 3 ? 'percent_saved desktop' : null}`
                   }
                 >
                   {price}
@@ -131,8 +132,8 @@ export default function Chart(props) {
                   key={idx} 
                   className={
                     `fleet-chart__row__cost 
-                    ${idx === 0 ? 'managed_electric' : null} 
-                    ${idx > 2 ? 'desktop' : null}`
+                    ${idx === 0 || idx === 3 ? 'managed_electric' : null} 
+                    ${idx === 3 ? 'percent_saved desktop' : null}`
                   }
                 >
                   {price}

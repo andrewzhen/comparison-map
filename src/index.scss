@@ -58,6 +58,7 @@ $dark-blue: #323D4E;
 $icon-blue: #165199;
 $expand-blue: #31A1EF;
 $yellow: #FFC23A;
+$green: #00FFA3;
 $white: #FFFFFF;
 $grey: #A9A9A9;
 $black: #000000;
@@ -226,7 +227,7 @@ a {
 				}
 
 				.leaflet-popup-content {
-					padding: $map-padding;
+					padding: $map-padding $map-padding * 2;
 
 					header {
 						position: relative;
@@ -352,12 +353,12 @@ a {
 
 	@at-root #{&}__row {
 		display: grid;
-		grid-template-columns: repeat(7, 1fr);
+		grid-template-columns: repeat(5, 1fr) 1.5fr;
 		align-items: center;
 		text-align: center;
 
 		&:not(:first-child) {
-			margin: 1.4rem 0;
+			margin: 0.75rem 0;
 
 			@include md {
 				margin: 2vw 0;
@@ -376,6 +377,8 @@ a {
 				font-size: 0.875rem;
 				font-weight: 700;
 				color: $grey;
+				max-width: 80%;
+				margin: auto;
 
 				@include lg {
 					&.desktop {
@@ -400,6 +403,7 @@ a {
 		> img {
 			margin: auto;
 			width: 90%;
+			pointer-events: none;
 
 			@include lg {
 				display: none;
@@ -450,6 +454,11 @@ a {
 
 		.managed_electric {
 			font-weight: 800;
+			font-size: 2rem;
+
+			&.percent_saved {
+				color: $green;
+			}
 		}
 	}
 }

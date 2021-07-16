@@ -45,6 +45,7 @@ export default function App() {
       .then(
         cities => {
           setCities(cities);
+          console.log(cities);
           
           // wait before populating city, state names
           setTimeout(() => {
