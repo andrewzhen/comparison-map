@@ -60,9 +60,9 @@ export default function App() {
     <div className="App">
       <header>
         <img src={Logo} alt="AMPLY | Gas vs. Electric Comparison Map" />
-        <a className="button" href="https://amplypower.com/">
+        {/* <a className="button" href="https://amplypower.com/">
           Visit amplypower.com
-        </a>
+        </a> */}
       </header>
 
       <MapContainer 
@@ -74,7 +74,7 @@ export default function App() {
         scrollWheelZoom={false}
         tap={false} // fixes unrecognized click event on Mac Safari for Leaflet v1.7.1
       >
-        <Marker position={[33.8,-118.5]} icon={heartIcon}>
+        {/* <Marker position={[33.8,-118.5]} icon={heartIcon}>
           <Popup autoPan={false}>
             <img 
               className="heartPopup__diagram" 
@@ -82,7 +82,7 @@ export default function App() {
               alt="Impacts of a National Transition to EVs by 2050"
             />
           </Popup>
-        </Marker>
+        </Marker> */}
         {
           cities.map((city, idx) => {
             return (
